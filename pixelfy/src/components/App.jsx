@@ -1,5 +1,7 @@
 import React from 'react';
 import '../css/App.css';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -15,7 +17,8 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="App">
-        Hello
+       <Navbar />
+       <Footer />
       </div>
     );
   }
