@@ -12,14 +12,16 @@ export default class App extends React.Component {
       search: '',
       view: 'list',
       networkDelay: 1,
-      index: 1,
+      id: '',
+      detailImage: ''
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.networkDelayChange = this.networkDelayChange.bind(this);
     this.searchClick = this.searchClick.bind(this);
     this.delayedSearch = this.delayedSearch.bind(this);
     this.setView = this.setView.bind(this);
-    this.setIndex = this.setIndex.bind(this);
+    this.setId = this.setId.bind(this);
+    this.findImage = this.findImage.bind(this);
   }
 
   handleSearchChange = (e) => {
@@ -54,8 +56,16 @@ export default class App extends React.Component {
       this.setState({view:newView})
   }
 
-  setIndex = (i) => {
+  setId = (i) => {
     this.setState({id: i})
+  }
+
+  findImage = (imageId) => {
+    for(let i = 0; i < this.state.images.length; i++) {
+      if (this.state.images[i].id === imageId) {
+        this.setState({detailImage:this.state.images[i]})
+      }
+    }
   }
 
   componentDidMount() {
@@ -78,7 +88,7 @@ export default class App extends React.Component {
             searchClick={this.searchClick}
             delayedSearch={this.delayedSearch}
           />
-          <List images={this.state.images} setIndex={this.setIndex} setView={this.setView} />
+          <List images={this.state.images} setId={this.setId} setView={this.setView} findImage={this.findImage} />
         </div>
       );
     }
@@ -91,7 +101,7 @@ export default class App extends React.Component {
             searchClick={this.searchClick}
             delayedSearch={this.delayedSearch}
           />
-          <ListDetails images={this.state.images} index={this.state.index} setView={this.setView} />
+          <ListDetails detailImage={this.state.detailImage} setView={this.setView} />
         </div>
       )
     }

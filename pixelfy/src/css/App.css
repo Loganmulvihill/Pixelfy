@@ -11,3 +11,8 @@ body {
 .border-green {
   border:solid 3px #7DC241;
 }
+
+
+.background-white {
+  background-color:white;
+}
