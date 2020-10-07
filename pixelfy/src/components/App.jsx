@@ -14,6 +14,8 @@ export default class App extends React.Component {
     };
     this.handleSearchChange= this.handleSearchChange.bind(this);
     this.networkDelayChange = this.networkDelayChange.bind(this);
+    this.searchClick = this.searchClick.bind(this);
+    this.delayedSearch = this.delayedSearch.bind(this);
   }
 
   handleSearchChange = (e) => {
@@ -28,8 +30,24 @@ export default class App extends React.Component {
     console.log(this.state.search);
   }
 
+  searchClick = () => {
+    fetch(`https://pixabay.com/api/?key=18604417-bae5ac0ef8e7027218adc269a&q=${this.state.search}&safesearch=true&image_type=photo`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ images: data.hits })
+      });
+  }
+
+  delayedSearch = () => {
+    const delayAmount = this.state.networkDelay;
+    this.setState({images:[]})
+    setTimeout( () => {
+      this.searchClick()}, (delayAmount * 1000))
+  }
+
   componentDidMount() {
-    fetch('https://pixabay.com/api/?key=18604417-bae5ac0ef8e7027218adc269a&q=yellow+flowers&image_type=photo')
+    const initialPic = 'Sun';
+    fetch(`https://pixabay.com/api/?key=18604417-bae5ac0ef8e7027218adc269a&q=${initialPic}&image_type=photo`)
       .then(response => response.json())
       .then(data => {
         this.setState({ images: data.hits })
@@ -39,7 +57,12 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Navbar handleSearchChange={this.handleSearchChange} networkDelayChange={this.networkDelayChange} />
+        <Navbar
+        handleSearchChange={this.handleSearchChange}
+        networkDelayChange={this.networkDelayChange}
+        searchClick={this.searchClick}
+        delayedSearch={this.delayedSearch}
+        />
         <List images={this.state.images} />
       </div>
     );
