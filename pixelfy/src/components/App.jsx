@@ -18,7 +18,6 @@ export default class App extends React.Component {
     return (
       <div className="App">
        <Navbar />
-       <Footer />
       </div>
     );
   }
