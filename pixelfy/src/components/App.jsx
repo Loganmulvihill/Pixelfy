@@ -40,7 +40,7 @@ export default class App extends React.Component {
     return (
       <div>
         <Navbar handleSearchChange={this.handleSearchChange} networkDelayChange={this.networkDelayChange} />
-        <List />
+        <List images={this.state.images} />
       </div>
     );
   }
