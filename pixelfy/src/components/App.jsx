@@ -12,10 +12,11 @@ export default class App extends React.Component {
       view: 'list',
       networkDelay: 1
     };
-    this.handleSearchChange= this.handleSearchChange.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
     this.networkDelayChange = this.networkDelayChange.bind(this);
     this.searchClick = this.searchClick.bind(this);
     this.delayedSearch = this.delayedSearch.bind(this);
+    this.setView = this.setView.bind(this);
   }
 
   handleSearchChange = (e) => {
@@ -40,9 +41,14 @@ export default class App extends React.Component {
 
   delayedSearch = () => {
     const delayAmount = this.state.networkDelay;
-    this.setState({images:[]})
-    setTimeout( () => {
-      this.searchClick()}, (delayAmount * 1000))
+    this.setState({ images: [] })
+    setTimeout(() => {
+      this.searchClick()
+    }, (delayAmount * 1000))
+  }
+
+  setView = (newView) => {
+      this.setState({view:newView})
   }
 
   componentDidMount() {
@@ -55,16 +61,32 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <Navbar
-        handleSearchChange={this.handleSearchChange}
-        networkDelayChange={this.networkDelayChange}
-        searchClick={this.searchClick}
-        delayedSearch={this.delayedSearch}
-        />
-        <List images={this.state.images} />
-      </div>
-    );
+
+    if (this.state.view === 'list') {
+      return (
+        <div>
+          <Navbar
+            handleSearchChange={this.handleSearchChange}
+            networkDelayChange={this.networkDelayChange}
+            searchClick={this.searchClick}
+            delayedSearch={this.delayedSearch}
+          />
+          <List images={this.state.images} />
+        </div>
+      );
+    }
+    if (this.state.view === 'listDetails') {
+      return (
+        <div>
+          <Navbar
+            handleSearchChange={this.handleSearchChange}
+            networkDelayChange={this.networkDelayChange}
+            searchClick={this.searchClick}
+            delayedSearch={this.delayedSearch}
+          />
+          <List images={this.state.images} />
+        </div>
+      );
+    }
   }
 }
