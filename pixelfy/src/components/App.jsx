@@ -24,19 +24,17 @@ export default class App extends React.Component {
     this.findImage = this.findImage.bind(this);
   }
 
-  handleSearchChange = (e) => {
+  handleSearchChange(e) {
     e.preventDefault();
     this.setState({ search: e.target.value });
-    console.log(this.state.search);
   }
 
-  networkDelayChange = (e) => {
+  networkDelayChange(e) {
     e.preventDefault();
     this.setState({ networkDelay: e.target.value });
-    console.log(this.state.search);
   }
 
-  searchClick = () => {
+  searchClick() {
     fetch(`https://pixabay.com/api/?key=18604417-bae5ac0ef8e7027218adc269a&q=${this.state.search}&safesearch=true&image_type=photo`)
       .then(response => response.json())
       .then(data => {
@@ -44,7 +42,7 @@ export default class App extends React.Component {
       });
   }
 
-  delayedSearch = () => {
+  delayedSearch() {
     const delayAmount = this.state.networkDelay;
     this.setState({ images: [] })
     setTimeout(() => {
@@ -52,15 +50,15 @@ export default class App extends React.Component {
     }, (delayAmount * 1000))
   }
 
-  setView = (newView) => {
+  setView(newView) {
       this.setState({view:newView})
   }
 
-  setId = (i) => {
+  setId(i) {
     this.setState({id: i})
   }
 
-  findImage = (imageId) => {
+  findImage(imageId) {
     for(let i = 0; i < this.state.images.length; i++) {
       if (this.state.images[i].id === imageId) {
         this.setState({detailImage:this.state.images[i]})
